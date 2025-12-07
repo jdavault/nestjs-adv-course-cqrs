@@ -1,11 +1,10 @@
 //src/user/users.entity.ts
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity('users', { schema: 'testdb' })
+@Entity('users')
 export class Users {
-  @PrimaryColumn('binary', {
+  @PrimaryColumn('bytea', {
     name: 'userId',
-    length: 16,
     transformer: {
       to: (value: string) => {
         if (!value) return value;

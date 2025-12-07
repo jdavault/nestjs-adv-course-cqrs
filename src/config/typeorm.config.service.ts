@@ -8,18 +8,16 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
-      type: 'mysql',
+      type: 'postgres',
       host: process.env.TYPEORM_HOST || 'localhost',
-      port: Number(process.env.TYPEORM_PORT) || 3306,
-      username: process.env.TYPEORM_USERNAME || 'mysqluser',
-      password: process.env.TYPEORM_PASSWORD || 'mysqlpassword',
-      database:
-        process.env.TYPEORM_DATABASE || 'mydadv-course-nestjs-cqrs-demo',
+      port: Number(process.env.TYPEORM_PORT) || 5432,
+      username: process.env.TYPEORM_USERNAME || 'postgres',
+      password: process.env.TYPEORM_PASSWORD || 'postgres',
+      database: process.env.TYPEORM_DATABASE || 'adv-course-nestjs-cqrs-demo',
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: true,
       autoLoadEntities: true,
       logging: ['query', 'error'],
-      // Remove 'cli' and 'migrationsRun' - not in TypeORM 0.3
     };
   }
 }

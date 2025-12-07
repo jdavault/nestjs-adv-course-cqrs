@@ -1,16 +1,16 @@
 GET http://localhost:3000/profiles
 
 ###
-GET http://localhost:3000/profiles/f957e14f33254a2098b8903891603678
+GET http://localhost:3000/profiles/452b017ac1624c99b107301698c08ef7
 
 ###
 POST http://localhost:3000/profiles/signup
 Content-Type: application/json
 
 {
-  "email": "jdavault@example.com",
-  "username": "jdavault01",
-  "password": "p@55w0Rd01"
+  "email": "jdavault02@example.com",
+  "username": "jdavault02",
+  "password": "p@55w0Rd2"  
 }
 
 ###
