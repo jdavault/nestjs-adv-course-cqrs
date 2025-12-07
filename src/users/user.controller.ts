@@ -1,7 +1,10 @@
-import { Get, Post, Delete, Param, Controller, Body } from '@nestjs/common';
-import { Request } from 'express';
+import { Get, Post, Put, Delete, Param, Controller, Body } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CreateUserCommand } from './commands/impl/create-user.command';
+import { UpdateUserCommand } from './commands/impl/update-user.command';
+import { DeleteUserCommand } from './commands/impl/delete-user.command';
+import { GetUserQuery } from './queries/impl/get-user.query';
+import { GetAllUsersQuery } from './queries/impl/get-all-users.query';
 
 export class SignUpDto {
   email: string;
@@ -36,9 +39,13 @@ export class UserController {
     }
   }
 
+  @Get()
+  public async getAllUsers() {
+    return await this.queryBus.execute(new GetAllUsersQuery());
+  }
+
   @Get(':id')
   public async getUser(@Param('id') id: string) {
-    // You'll need to create GetUserQuery
     return await this.queryBus.execute(new GetUserQuery(id));
   }
 
@@ -47,7 +54,11 @@ export class UserController {
     @Param('id') id: string,
     @Body() input: UpdateUserDto,
   ) {
-    // You'll need to create UpdateUserCommand
     return await this.commandBus.execute(new UpdateUserCommand(id, input));
+  }
+
+  @Delete(':id')
+  public async deleteUser(@Param('id') id: string) {
+    return await this.commandBus.execute(new DeleteUserCommand(id));
   }
 }

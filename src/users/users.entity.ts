@@ -1,10 +1,26 @@
 //src/user/users.entity.ts
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('users', { schema: 'testdb' })
 export class Users {
-  @Column('binary', { primary: true, name: 'userId', length: 16 })
-  userId: Buffer;
+  @PrimaryColumn('binary', {
+    name: 'userId',
+    length: 16,
+    transformer: {
+      to: (value: string) => {
+        // Convert string UUID to Buffer for DB
+        if (!value) return value;
+        const hex = value.replace(/-/g, '');
+        return Buffer.from(hex, 'hex');
+      },
+      from: (value: Buffer) => {
+        // Convert Buffer to hex string from DB
+        if (!value) return value;
+        return Buffer.from(value).toString('hex');
+      },
+    },
+  })
+  userId: string;
 
   @Column('varchar', { name: 'username', length: 100 })
   username: string;

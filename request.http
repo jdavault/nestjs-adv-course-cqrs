@@ -1,36 +1,27 @@
-GET http://localhost:3000
-###Authorization: 7d8HMUuVX0WIMlb5PbCy9PkypgNu4SRg
+GET http://localhost:3000/profiles
 
 ###
-GET http://localhost:3000/users
-Authorization: 7d8HMUuVX0WIMlb5PbCy9PkypgNu4SRg
-###
-GET http://localhost:3000/users?offset=1
-
-
-&offset=10
-
-###
-GET http://localhost:3000/users/4
+GET http://localhost:3000/profiles/f957e14f33254a2098b8903891603678
 
 ###
 POST http://localhost:3000/profiles/signup
 Content-Type: application/json
 
 {
-  "email": "jdavault02@example.com",
-  "username": "jdavault02",
-  "password": "p@55w0Rd"
+  "email": "jdavault@example.com",
+  "username": "jdavault01",
+  "password": "p@55w0Rd01"
 }
 
 ###
-PATCH http://localhost:3000/users/6
+PUT http://localhost:3000/profiles/f957e14f33254a2098b8903891603678
 Content-Type: application/json
 
 {
-  "name": "Coffee #6 Updated"
+  "email": "jdavault04@example.com",
+  "username": "jdavault04",
+  "password": "p@55w0Rd4"
 }
 
 ###
-DELETE http://localhost:3000/users/2
-
+DELETE http://localhost:3000/profiles/f957e14f33254a2098b8903891603678
