@@ -13,6 +13,18 @@ services:
       - '3306:3306'
     volumes:
       - mysql_data:/var/lib/mysql
+  postgres:
+    image: postgres:latest
+    container_name: my_postgres_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: adv-course-nestjs-cqrs-demo
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   mysql_data:
+  postgres_data:

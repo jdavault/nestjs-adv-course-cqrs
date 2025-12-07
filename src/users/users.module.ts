@@ -6,22 +6,21 @@ import { CreateUserHandler } from './commands/handlers/create-user.handler';
 import { UserCreatedEvent } from './events/impl/user-created.event';
 import { UsersSagas } from './sagas/users.saga';
 import { UserController } from './user.controller';
+import { Users } from './users.entity';
 
 export const CommandHandlers = [CreateUserHandler];
-export const QueryHandlers =  [];
+export const QueryHandlers = [];
 export const EventHandlers = [UserCreatedEvent];
 @Module({
-    imports: [
-        CqrsModule,
-        TypeOrmModule.forFeature([UserRepository])
-    ],
-    controllers: [UserController],
-    providers: [
-        UserRepository,
-        ...CommandHandlers,
-        ...QueryHandlers,
-        ...EventHandlers, 
-        UsersSagas
-    ],
+  imports: [CqrsModule, TypeOrmModule.forFeature([Users])],
+  controllers: [UserController],
+  providers: [
+    UserRepository,
+    ...CommandHandlers,
+    ...QueryHandlers,
+    ...EventHandlers,
+    UsersSagas,
+  ],
+  exports: [UserRepository],
 })
 export class UsersModule {}
