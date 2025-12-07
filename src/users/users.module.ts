@@ -10,16 +10,23 @@ import { GetAllUsersHandler } from './queries/handlers/get-all-users.handler';
 import { UserCreatedEvent } from './events/impl/user-created.event';
 import { UsersSagas } from './sagas/users.saga';
 import { UserController } from './user.controller';
+import { UserResolver } from './graphql/user.resolver';
 import { Users } from './users.entity';
 
-export const CommandHandlers = [CreateUserHandler, UpdateUserHandler, DeleteUserHandler];
+export const CommandHandlers = [
+  CreateUserHandler,
+  UpdateUserHandler,
+  DeleteUserHandler,
+];
 export const QueryHandlers = [GetUserHandler, GetAllUsersHandler];
 export const EventHandlers = [UserCreatedEvent];
+
 @Module({
   imports: [CqrsModule, TypeOrmModule.forFeature([Users])],
   controllers: [UserController],
   providers: [
     UserRepository,
+    UserResolver,
     ...CommandHandlers,
     ...QueryHandlers,
     ...EventHandlers,

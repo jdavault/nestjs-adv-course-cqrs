@@ -8,13 +8,11 @@ export class Users {
     length: 16,
     transformer: {
       to: (value: string) => {
-        // Convert string UUID to Buffer for DB
         if (!value) return value;
         const hex = value.replace(/-/g, '');
         return Buffer.from(hex, 'hex');
       },
       from: (value: Buffer) => {
-        // Convert Buffer to hex string from DB
         if (!value) return value;
         return Buffer.from(value).toString('hex');
       },
