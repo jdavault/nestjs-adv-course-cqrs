@@ -1,0 +1,18 @@
+version: '3.8' # or any other version you prefer
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: my_mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: mysqlpassword
+      MYSQL_DATABASE: mydadv-course-nestjs-cqrs-demo
+      MYSQL_USER: mysqluser
+      MYSQL_PASSWORD: mysqlpassword
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
