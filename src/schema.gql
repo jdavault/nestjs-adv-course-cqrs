@@ -2,10 +2,56 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type ActivityLogType {
+  _id: ID!
+  action: String!
+  createdAt: DateTime!
+  entityId: String!
+  entityType: String!
+  metadata: JSON
+  payload: JSON
+  timestamp: DateTime!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+input CreateProjectInput {
+  deadline: DateTime
+  description: String
+  name: String!
+  status: ProjectStatus
+  userId: ID!
+}
+
+input CreateTaskInput {
+  assigneeId: ID
+  description: String
+  dueDate: DateTime
+  priority: TaskPriority
+  projectId: ID!
+  status: TaskStatus
+  title: String!
+}
+
 input CreateUserInput {
   email: String!
   password: String!
   username: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type DeleteProjectResponse {
+  deleted: Boolean!
+  projectId: String!
+}
+
+type DeleteTaskResponse {
+  deleted: Boolean!
+  taskId: String!
 }
 
 type DeleteUserResponse {
@@ -13,15 +59,98 @@ type DeleteUserResponse {
   userId: String!
 }
 
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf")
+
 type Mutation {
+  createProject(input: CreateProjectInput!): ProjectType!
+  createTask(input: CreateTaskInput!): TaskType!
   createUser(input: CreateUserInput!): UserType!
+  deleteProject(id: ID!): DeleteProjectResponse!
+  deleteTask(id: ID!): DeleteTaskResponse!
   deleteUser(id: ID!): DeleteUserResponse!
+  updateProject(id: ID!, input: UpdateProjectInput!): ProjectType!
+  updateTask(id: ID!, input: UpdateTaskInput!): TaskType!
   updateUser(id: ID!, input: UpdateUserInput!): UserType!
 }
 
+"""Project status enum"""
+enum ProjectStatus {
+  ACTIVE
+  ARCHIVED
+  COMPLETED
+  DRAFT
+}
+
+type ProjectType {
+  createdAt: DateTime!
+  deadline: DateTime
+  description: String
+  name: String!
+  projectId: ID!
+  status: ProjectStatus!
+  updatedAt: DateTime!
+  userId: ID!
+}
+
 type Query {
+  activityByEntity(entityId: ID!, entityType: String!, limit: Int = 50): [ActivityLogType!]!
+  activityByUser(limit: Int = 50, userId: ID!): [ActivityLogType!]!
+  activityLogs(action: String, entityId: ID, entityType: String, limit: Int = 50, offset: Int = 0, userId: ID): [ActivityLogType!]!
+  project(id: ID!): ProjectType!
+  projects: [ProjectType!]!
+  projectsByUser(userId: ID!): [ProjectType!]!
+  recentActivity(limit: Int = 20): [ActivityLogType!]!
+  task(id: ID!): TaskType!
+  tasksByAssignee(assigneeId: ID!): [TaskType!]!
+  tasksByProject(projectId: ID!): [TaskType!]!
   user(id: ID!): UserType!
   users: [UserType!]!
+}
+
+"""Task priority enum"""
+enum TaskPriority {
+  HIGH
+  LOW
+  MEDIUM
+}
+
+"""Task status enum"""
+enum TaskStatus {
+  DONE
+  IN_PROGRESS
+  TODO
+}
+
+type TaskType {
+  assigneeId: ID
+  createdAt: DateTime!
+  description: String
+  dueDate: DateTime
+  priority: TaskPriority!
+  projectId: ID!
+  status: TaskStatus!
+  taskId: ID!
+  title: String!
+  updatedAt: DateTime!
+}
+
+input UpdateProjectInput {
+  deadline: DateTime
+  description: String
+  name: String
+  status: ProjectStatus
+}
+
+input UpdateTaskInput {
+  assigneeId: ID
+  description: String
+  dueDate: DateTime
+  priority: TaskPriority
+  status: TaskStatus
+  title: String
 }
 
 input UpdateUserInput {

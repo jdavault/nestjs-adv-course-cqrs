@@ -8,8 +8,8 @@ POST http://localhost:3000/profiles/signup
 Content-Type: application/json
 
 {
-  "email": "jdavault02@example.com",
-  "username": "jdavault02",
+  "email": "sandbox02@example.com",
+  "username": "sandbox02",
   "password": "p@55w0Rd2"  
 }
 
@@ -18,8 +18,8 @@ PUT http://localhost:3000/profiles/f957e14f33254a2098b8903891603678
 Content-Type: application/json
 
 {
-  "email": "jdavault04@example.com",
-  "username": "jdavault04",
+  "email": "sandbox04@example.com",
+  "username": "sandbox04",
   "password": "p@55w0Rd4"
 }
 
